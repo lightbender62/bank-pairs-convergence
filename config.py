@@ -27,7 +27,7 @@ PRICE_COLUMN = "Close"
 # --- Stationarity / cointegration ---
 ADF_REGRESSION = "c" 
 SIGNIFICANCE_LEVEL = 0.05
-CORRELATION_THRESHOLD = 0.8 
+CORRELATION_THRESHOLD = 0.5
 
 # --- Spread / signal ---
 ZSCORE_LOOKBACK = 30      
