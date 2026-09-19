@@ -19,3 +19,14 @@ print(corr_table)
 candidates = selector.filter_candidates(corr_table)
 print("\nCandidates above threshold:")
 print(candidates)
+
+cointegration_results = selector.run_cointegration_scan(prices, candidates)
+print("\nCointegration results (ranked by p-value):")
+print(cointegration_results)
+
+best_pair = cointegration_results.iloc[0]
+pair_prices = prices[[best_pair["ticker_a"], best_pair["ticker_b"]]]
+
+johansen_result = selector.johansen_test(pair_prices)
+print(f"\nJohansen test on {best_pair['ticker_a']} / {best_pair['ticker_b']}:")
+print(johansen_result)
