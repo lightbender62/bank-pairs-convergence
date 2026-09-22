@@ -37,3 +37,10 @@ STOP_LOSS_ZSCORE = 4.0
 
 # --- Backtest ---
 TRANSACTION_COST_PER_LEG = 0.0005
+
+# --- Spread / signal (tuned using HDFCBANK-KOTAKBANK OU half-life ≈ 20.5 days) ---
+ZSCORE_LOOKBACK = 30         # ~1.5x the fitted OU half-life (20.5 days)
+ENTRY_ZSCORE = 2.0
+EXIT_ZSCORE = 0.5
+STOP_LOSS_ZSCORE = 4.0
+MAX_HOLDING_DAYS = 42        # ~2x half-life; if position hasn't reverted by then, treat as anomalous
