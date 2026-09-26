@@ -22,7 +22,7 @@ class PairsBacktester:
                 
         self.positions = self.signal.shift(1).fillna(0) 
         if isinstance(self.hedge_ratio, pd.Series):
-            exec_beta = self.hedge_ratio.shift(1).fillna(method='bfill')
+            exec_beta = self.hedge_ratio.shift(1).bfill()
         else:
             exec_beta = self.hedge_ratio
         
@@ -98,14 +98,21 @@ class PairsBacktester:
             "Total Trades": int(total_trades)
         }
         
-    if __name__ == "__main__":
-        np.random.seed(42)
-        dates = pd.date_range(start="2023-01-01", periods=100)
-        p_a= pd.Series(np.random.normal(100, 2, 100), index=dates)
-        p_b = pd.Series(np.random.normal(50, 1, 100), index=dates)
-        sigs = pd.Series(np.random.choice([1, 0, -1], size=100), index=dates)
-        backtester = PairsBacktester(p_a, p_b, sigs, hedge_ratio=0.5)
-        eq = backtester.runbacktester()
-        metrics = backtester.metrics()
-        print("Performance Metrics:\n", metrics)      
-    
+
+if __name__ == "__main__":
+    np.random.seed(42)
+    dates = pd.date_range(start="2023-01-01", periods=100)
+    p_a = pd.Series(np.random.normal(100, 2, 100), index=dates)
+    p_b = pd.Series(np.random.normal(50, 1, 100), index=dates)
+    sigs = pd.Series(np.random.choice([1, 0, -1], size=100), index=dates)
+    beta_series = pd.Series(np.random.normal(0.5, 0.05, 100), index=dates)
+
+    print("\nStatic hedge ratio")
+    bt_static = PairsBacktester(p_a, p_b, sigs, hedge_ratio=0.5)
+    bt_static.runbacktester()
+    print(bt_static.metrics())
+
+    print("\nDynamic (Kalman-style) hedge ratio")
+    bt_dynamic = PairsBacktester(p_a, p_b, sigs, hedge_ratio=beta_series)
+    bt_dynamic.runbacktester()
+    print(bt_dynamic.metrics())
