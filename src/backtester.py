@@ -97,3 +97,15 @@ class PairsBacktester:
             "Daily Win Rate": winrate,
             "Total Trades": int(total_trades)
         }
+        
+    if __name__ == "__main__":
+        np.random.seed(42)
+        dates = pd.date_range(start="2023-01-01", periods=100)
+        p_a= pd.Series(np.random.normal(100, 2, 100), index=dates)
+        p_b = pd.Series(np.random.normal(50, 1, 100), index=dates)
+        sigs = pd.Series(np.random.choice([1, 0, -1], size=100), index=dates)
+        backtester = PairsBacktester(p_a, p_b, sigs, hedge_ratio=0.5)
+        eq = backtester.runbacktester()
+        metrics = backtester.metrics()
+        print("Performance Metrics:\n", metrics)      
+    
