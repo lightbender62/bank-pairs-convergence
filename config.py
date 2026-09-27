@@ -44,3 +44,12 @@ ENTRY_ZSCORE = 2.0
 EXIT_ZSCORE = 0.5
 STOP_LOSS_ZSCORE = 4.0
 MAX_HOLDING_DAYS = 42        # ~2x half-life; if position hasn't reverted by then, treat as anomalous
+
+# 0.05% broker fee per leg
+TRANSACTION_COST_PER_LEG = 0.0005 
+
+# Strategy parameters from teammate's module
+ZSCORE_LOOKBACK = 30
+MAX_HOLDING_DAYS = 42
+ENTRY_ZSCORE = 2.0
+EXIT_ZSCORE = 0.5
