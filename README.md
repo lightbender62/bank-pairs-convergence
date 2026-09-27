@@ -72,9 +72,3 @@ Scripts in `notebooks/` run the pipeline end to end, in this order:
 6. **Robustness** — 2023 held-out window, second candidate pair, full-universe validity check
 
 Full statistical writeup, backtest results, and risk summary are in `reports/`.
-
-## Team
-
-- Eklavya — 250001028
-- Chetan — 250001023
-- Atharv — 250004008
