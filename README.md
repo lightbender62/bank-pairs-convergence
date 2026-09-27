@@ -18,23 +18,51 @@ This project builds a pairs trading strategy on Indian private-sector bank stock
 
 ```
 Pairs-Trading/
-├── config.py               # tickers, date ranges, thresholds — single source of config
+│
+├── config.py
+│   # tickers, date ranges, thresholds — single source of config
+│
 ├── requirements.txt
+├── pytest.ini
+│
 ├── data/
-│   ├── raw/                 # cached price pulls
+│   ├── raw/
+│   │   # cached price pulls
 │   └── processed/
+│
 ├── src/
-│   ├── data_loader.py       # fetch, clean, cache price data
-│   ├── stationarity.py      # ADF, KPSS tests
-│   ├── pair_selection.py    # correlation filter, Engle-Granger, Johansen
-│   ├── spread_analysis.py   # Jarque-Bera, Ljung-Box, OU half-life fit
-│   ├── hedge_ratio.py       # static OLS + Kalman filter hedge ratio
-│   ├── strategy.py          # rolling z-score signal generation
-│   ├── backtest.py          # vectorized backtest engine + performance metrics
-│   └── risk.py               # stop-loss, rolling cointegration re-test
-├── notebooks/                # pipeline scripts, run in order (see below)
+│   ├── data_loader.py
+│   │   # fetch, clean, cache price data
+│   │
+│   ├── stationarity.py
+│   │   # ADF, KPSS tests
+│   │
+│   ├── pair_selection.py
+│   │   # correlation filter, Engle-Granger, Johansen
+│   │
+│   ├── spread_analysis.py
+│   │   # Jarque-Bera, Ljung-Box, OU half-life fit
+│   │
+│   ├── hedge_ratio.py
+│   │   # static OLS + Kalman filter hedge ratio
+│   │
+│   ├── strategy.py
+│   │   # rolling z-score signal generation
+│   │
+│   ├── backtest.py
+│   │   # vectorized backtest engine + performance metrics
+│   │
+│   └── risk.py
+│       # stop-loss, rolling cointegration re-test
+│
+├── notebooks/
+│   # pipeline scripts, run in order (see below)
+│
 ├── tests/
-└── reports/                  # full report, equity curves, risk summary
+│   # pytest suite covering the modules above
+│
+└── reports/
+    # full report, equity curves, risk summary
 ```
 
 ## Setup
@@ -61,6 +89,14 @@ Scripts in `notebooks/` run the pipeline end to end, in this order:
 | `10_test_window_evaluation.py` | Evaluate on the 2023 held-out window |
 | `11_second_pair_test.py` | 2023 evaluation for the second pair |
 | `12_test_window_full_scan.py` | Full 28-pair cointegration scan, 2023-only, as a validity check |
+
+## Running Tests
+
+```
+pytest tests/ -v
+```
+
+Covers data cleaning, stationarity detection, cointegration correctness (against synthetic data with a known answer), hedge ratio estimation, signal generation, backtest mechanics, and the risk stop-loss logic.
 
 ## Methodology Summary
 
