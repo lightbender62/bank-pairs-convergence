@@ -41,10 +41,15 @@ bt_static.runbacktester()
 print("Static hedge ratio metrics:", bt_static.metrics())
 
 # Plot both equity curves
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+report_path = os.path.join(project_root, "reports", "equity_curve_comparison.png")
+os.makedirs(os.path.dirname(report_path), exist_ok=True)
+
 plt.figure(figsize=(12, 6))
 plt.plot(bt.equity_curve, label="Kalman hedge ratio")
 plt.plot(bt_static.equity_curve, label="Static hedge ratio")
 plt.axhline(1.0, color="gray", linestyle="--", alpha=0.5)
 plt.legend()
 plt.title("Equity Curve Comparison")
+plt.savefig(report_path)
 plt.show()
